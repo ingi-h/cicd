@@ -1,0 +1,108 @@
+---
+apiVersion: v1
+kind: Namespace
+metadata:
+  name: company1
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: deploy-main
+  namespace: company1
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      page: main
+  template:
+    metadata:
+      name: pod-main
+      labels:
+        page: main
+    spec:
+      containers:
+      - name: ctn-main
+        image: rudclthe/testimg:main
+        ports:
+        - containerPort: 80
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: svc-main
+  namespace: company1
+spec:
+  selector:
+    page: main
+  ports:
+  - port: 80
+  type: LoadBalancer
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: deploy-blog
+  namespace: company1
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      page: blog
+  template:
+    metadata:
+      name: pod-blog
+      labels:
+        page: blog
+    spec:
+      containers:
+      - name: ctn-blog
+        image: rudclthe/testimg:blog
+        ports:
+        - containerPort: 80
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: svc-blog
+  namespace: company1
+spec:
+  selector:
+    page: blog
+  ports:
+  - port: 80
+  type: LoadBalancer
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: deploy-shop
+  namespace: company1
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      page: shop
+  template:
+    metadata:
+      name: pod-shop
+      labels:
+        page: shop
+    spec:
+      containers:
+      - name: ctn-shop
+        image: rudclthe/testimg:shop
+        ports:
+        - containerPort: 80
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: svc-shop
+  namespace: company1
+spec:
+  selector:
+    page: shop
+  ports:
+  - port: 80
+  type: LoadBalancer
+---
