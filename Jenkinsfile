@@ -34,7 +34,7 @@ pipeline {
         sh '''
         sudo ansible kvm1 -m shell -a 'docker build -t rudclthe/testimg:{{TAG2}} blog/ &&
         docker push rudclthe/testimg:{{TAG2}} &&
-        kubectl set image deployment deploy-blog ctn-blog=rudclthe/testimg:{{TAG2}} -n company1' -e "TAG2=${TAG3}" --become
+        kubectl set image deployment deploy-blog ctn-blog=rudclthe/testimg:{{TAG2}} -n company1' -e "TAG2=${TAG2}" --become
         '''
       }
     }
