@@ -1,0 +1,12 @@
+---
+- name: docker image build and push
+  hosts: kvm1
+  become: yes
+
+  tasks:
+    - name: Build an image and push it to a repo
+      docker_image:
+        path: ./blog
+        name: rudclthe/testimg
+        tag: {{TAG}}
+        push: yes
