@@ -2,12 +2,6 @@ pipeline {
   agent any
     
   stages {
-    stage('git scm update') {
-      steps {
-        git url: 'https://github.com/ingi-h/cicdtest.git', branch: 'master'
-      }
-    }
-
     stage('update main page'){
       input {
         message "What is your main image tag?"
@@ -18,7 +12,10 @@ pipeline {
       }
       steps {
         sh '''
-        ansible kvm1 -m shell -a 'docker build -t rudclthe/testimg:${TAG1} main/ &&
+        sudo ansible kvm1 -m shell -a 'sudo rm -rf /var/lib/jenkins/workspace/JenkinsUpload/cicd &&
+        git clone https://github.com/ingi-h/cicd.git &&
+        cd cicd &&
+        docker build -t rudclthe/testimg:${TAG1} main/ &&
         docker push rudclthe/testimg:${TAG1} &&
         kubectl set image deployment deploy-main ctn-main=rudclthe/testimg:${TAG1}' --become
         '''
@@ -35,7 +32,7 @@ pipeline {
       }
       steps {
         sh '''
-        ansible kvm1 -m shell -a 'docker build -t rudclthe/testimg:${TAG2} blog/ &&
+        sudo ansible kvm1 -m shell -a 'docker build -t rudclthe/testimg:${TAG2} blog/ &&
         docker push rudclthe/testimg:${TAG2} &&
         kubectl set image deployment deploy-blog ctn-blog=rudclthe/testimg:${TAG2}' --become
         '''
@@ -52,7 +49,7 @@ pipeline {
       }
       steps {
         sh '''
-        ansible kvm1 -m shell -a 'docker build -t rudclthe/testimg:${TAG3} shop/ &&
+        sudo ansible kvm1 -m shell -a 'docker build -t rudclthe/testimg:${TAG3} shop/ &&
         docker push rudclthe/testimg:${TAG3} &&
         kubectl set image deployment deploy-shop ctn-shop=rudclthe/testimg:${TAG3}' --become
         '''
@@ -66,4 +63,5 @@ pipeline {
     }
   }
 }
+
 
