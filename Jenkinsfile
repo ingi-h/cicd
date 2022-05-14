@@ -12,7 +12,7 @@ pipeline {
       }
       steps {
         sh '''
-        sudo ansible kvm1 -m shell -a 'sudo rm -rf /var/lib/jenkins/workspace/JenkinsUpload/cicd &&
+        sudo ansible kvm1 -m shell -a 'sudo rm -rf cicd &&
         git clone https://github.com/ingi-h/cicd.git &&
         cd cicd &&
         docker build -t rudclthe/testimg:${TAG1} main/ &&
