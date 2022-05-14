@@ -12,7 +12,7 @@ pipeline {
       }
       steps {
         sh '''
-        sudo ansible kvm1 -m shell -a 'sudo rm -rf cicd &&
+        sudo ansible kvm1 -m shell -a 'rm -rf cicd &&
         git clone https://github.com/ingi-h/cicd.git &&
         cd cicd &&
         docker build -t rudclthe/testimg:${TAG1} main/ &&
